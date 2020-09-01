@@ -43,9 +43,14 @@ Example
 1. State: $S = \btheta$
 2. Observation: $x = x_{1:n}$
 3. Action: $a = \hat\theta$
-4. Loss: $\ell(\theta,\hat\theta) = (\theta-\hat\theta)^2$ (quadratic loss, a.k.a. square loss)
+4. Loss: $\ell(\theta,\hat\theta) = (\theta-\hat\theta)^2$ (quadratic loss, a.k.a. squared error loss)
 
-\textcolor{red}{Question: Why do we consider quadratic loss over other loss functions?}
+
+
+Question
+===
+
+Why do we consider the squared error loss function over other loss functions, such as the absolute error loss function? 
 
 
 Bayesian approach
@@ -62,16 +67,24 @@ Bayesian approach (continued)
 ===
 
 1. A \term{decision procedure} $\delta$ is a systematic way of choosing actions $a$ based on observations $x$. Typically, this is a deterministic function $a=\delta(x)$ (but sometimes introducing some randomness into $a$ can be useful).
-2. A \term{Bayes procedure} is a decision procedure that chooses an $a$ minimizing the posterior expected loss $\rho(a,x)$, for each $x$.
-3. Note: Sometimes the loss is restricted to be nonnegative, to avoid certain pathologies. 
+2. A \term{Bayes procedure or rule} is a decision procedure $\delta$ that chooses an action $a$ that minimizes the posterior expected loss $\rho(a,x)$, for each $x$.\footnote{Sometimes the loss is restricted to be nonnegative, to avoid certain pathologies.}
 
-What is the optimal decision rule?
+What is the Bayes rule assuming squared error loss?
 ===
 
-- Goal: Minimize the posterior risk
-- First note that 
-$$\ell(\theta,\hat\theta) =\theta^2 - 2\theta\hat\theta + \hat\theta^2$$
-- It then follows that the \textbf{posterior loss} is
+Goal: Find the Bayes rule. 
+
+1.  Assume that $\hat{\theta}$ is an estimator of $\theta.$ 
+2.  Assume data $x_{1:n}.$ 
+3.  Assume squared error loss $$\ell(\theta,\hat\theta) = (\theta-\hat\theta)^2.$$
+
+Finding the Bayes rule
+===
+
+By definition, we want to **minimize the posterior risk** (or posterior expected loss).
+
+The **posterior risk** can be written as
+
 \begin{align*}
 \rho(\hat\theta,x_{1:n})&=\E(\ell(\theta,\hat\theta)|x_{1:n}) =
 \E((\theta-\hat\theta)^2|x_{1:n}) \\
@@ -81,16 +94,23 @@ $$\ell(\theta,\hat\theta) =\theta^2 - 2\theta\hat\theta + \hat\theta^2$$
 \end{align*}
 which is a convex function of $\hat\theta$. 
 
-What is the optimal decision rule?
+
+
+
+Finding the Bayes rule
 ===
+
 We just showed that
 $$\rho(\hat\theta,x_{1:n}) = \E(\theta^2|x_{1:n}) - 2\hat\theta\E(\theta|x_{1:n}) +\hat\theta^2$$
 Setting the derivative with respect to $\hat\theta$ equal to $0$, and solving, we find that the minimum occurs at $\hat\theta = \E(\btheta|x_{1:n})$, \textbf{the posterior mean}. 
 
 Let's walk through this derivation together. 
 
-What is the optimal decision rule?
+What is the Bayes rule?
 ===
+
+Let's now **minimize the posterior risk.** 
+
 \begin{align*}
 \frac{\partial \rho(\hat\theta,x_{1:n})}{\partial \hat{\theta}}
 &= \frac{\partial \{\E(\theta^2|x_{1:n}) - 2\hat\theta\E(\theta|x_{1:n}) +\hat\theta^2\}}{\partial \hat{\theta}}
@@ -101,6 +121,18 @@ $$ -2 \E(\theta|x_{1:n}) + 2 \hat{\theta} = 0, $$
 which implies that $$\hat{\theta} = \E(\theta|x_{1:n}).$$
 
 Why is the solution unique?
+
+What is the Bayes rule (under squared error loss)?
+===
+
+To summarize, we just showed that the Bayes rule under squared error loss is 
+
+$$\hat{\theta} = \E(\theta|x_{1:n}).$$
+\vspace*{1em}
+
+That is, the **Bayes rule is the posterior mean**! 
+
+
 
 Resource allocation for disease prediction
 ===
@@ -116,6 +148,10 @@ Suppose they allocate enough resources to accomodate a fraction $c$ of the popul
 - After deliberation, they adopt the following loss function:
 $$\ell(\theta,c) =\branch{|\theta-c|}{c\geq\theta}
                        {10|\theta-c|}{c<\theta.}$$
+                       
+\vspace*{1em}
+
+**This applied example corresponds to lab 3 and homework 4.**
                        
 Resource allocation for disease prediction (continued)
 ===                       
@@ -414,6 +450,69 @@ Takeaways
 
 - Finally, we defined admissible/inadmissible rules. 
 
+Announcements
+===
+
+Thank you for your feedback on the course so far! If you have not yet filled out the survey, I would greatly appreciate your feedback. About half the class filled out the survey. 
+
+What you appreciated/liked
+===
+
+1. The pace of the lecture. 
+2. The interactive lectures and use of the Ipad. 
+3. The pre-recorded videos. 
+4. Most students like the homework and length.
+5. Most students like the organization and structure of the course. If you did not, there is a video explaining how to naviagate the course webpage that I went over on the first day of class. 
+6. Students appreciated how available myself + the TA Team for answering questions. (If you're not reaching out; please reach out). We are here to help you! 
+7. Students appreciated the focus on learning over grading. 
+8. Students said the course was on par or much better than their virtual lectures. 
+9. Students appreciated that there is a wealth of information available to them. 
+
+Student Requests
+===
+
+- Students asked for a cheat sheet regarding the course. Done! 
+
+- Extra OH. Done! 
+
+- Students would like to see expectations regarding the graded homeworks. Done! 
+
+- Ipad notes have been pre-recorded, so these are already there:) 
+
+- A few students asked if I can record OH. (This is not possible by Duke policy). 
+
+
+
+
+Student Requests
+===
+
+
+
+- ``I'm overwhelmed by the reading, video recordings, and amount of material."
+
+If you're getting overwhelmed, please talk with me 1-1, so I can talk with you regarding making a plan and strategy that works best with you. 
+
+
+- A few students would prefer videos on Panopto. I unfortuantely will not have time to move all videos to Panopto and make this extremely organized this semester. I really appreciate the feedback though. 
+
+Other Requests
+===
+
+
+
+- Two students would like different due dates of assignments. 
+- Two students would like Piazza as opposted to the Google group. 
+- Two students did not like the course webpage. (More feedback would be helpful on what you don't like about it). 
+
+Since most students didn't ask for a change, I'm going to keep these dates the same. If you have a special circumstance that falls under the flexibility teaching policy that I offer, please email me by today to talk about options. 
+
+Things I've done
+===
+
+- The labs now just have one file (Rmd and pdf). Please check that you can render these as you need LaTeX installed. 
+- When class connects to a lab, I've noted in the online lectures. 
+- Pop me an email if you have any clarification, and I'm always happy to modify the lecture notes to improve the clarity. 
 
 
 
