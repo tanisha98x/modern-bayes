@@ -9,13 +9,38 @@ output:
 font-size: 8px
 ---
 
+Announcements
+===
+
+- Exam II will be Thursday October 29th (it will be open note, open book)
+- No required class on November 3rd (Election day). I will post an ansyn. lecture for you to watch at your convenience so we don't get behind on material. 
+- There are more practice problems posted (and more coming).
+- Thank you for all the feedback from the survey. 
+- If you are a student that needs an extra OH, please email me by tomorrow at 5 PM so I can organize this with three preferred times. 
+- Detailed takeways have been posted for each module (1-6) to help you prepare for exams. 
+
+
+
 Agenda
 ===
+- Background knowledge (inverse CDF method)
 - Gibbs sampling (two-stage sampler)
 - Exponential example
 - Normal example
 - Pareto example
 - Diagnostics
+
+Background knowledge
+===
+
+The inverse CDF technique for generating a random sample uses the fact that a continuous CDF, $F$, is a one-to-one mapping of the domain of the CDF into the interval $(0,1).$ 
+
+\begin{lemma}
+If $U$ is a uniform random variable on $(0,1),$ then $X = F^{-1}(U)$ has the distribution $F.$
+\end{lemma}
+
+Formal Proof: \url{https://www.youtube.com/watch?v=irheiVXJRm8} 
+
 
 
 Gibbs sampler
@@ -205,8 +230,29 @@ An easy way to generate a sample from $Z\sim\TExp(\theta,(0,c))$, is:
     \item Sample $U\sim \Uniform(0,F(c|\theta))$ where $$F(x|\theta) = 1-e^{-\theta x}$$ is the $\Exp(\theta)$ c.d.f.
     \item Set $Z = F^{-1}(U|\theta)$ where $$F^{-1}(u|\theta) = -(1/\theta)\log(1 - u)$$ is the inverse c.d.f.\ for $u\in(0,1)$.
 \end{enumerate}
-Hint: To verify the last step: apply the rejection principle (along with the inverse cdf technique). 
-Verify the last step on your own.
+
+There is an exercise on the next slide to prove step 2. 
+
+Toy Example
+===
+Practice Exercise: Verify that 
+
+$$F^{-1}(u|\theta) = -(1/\theta)\log(1 - u).$$
+Solution: 
+
+To solve for $F^{-1},$ set $u= F(x)$ for $u \in (0,1)$ and solve for $x.$
+$$
+\begin{aligned}
+u &= 1-e^{-\theta x} \implies \\
+e^{-\theta x} & = 1-u \implies \\
+-\theta x & = \log(1-u)\implies \\
+ x & = -\frac{1}{\theta}\log(1-u).
+\end{aligned}
+$$
+This proves that $F^{-1}(u|\theta) = -(1/\theta)\log(1 - u).$
+
+
+
 
 
 Toy example
@@ -235,14 +281,17 @@ Toy example
 Example: Normal with semi-conjugate prior
 ===
 Consider
-$X_1,\ldots,X_n|\mu,\lambda\,\stackrel{iid}{\sim} \N(\mu,\lambda^{-1})$.
+$$X_1,\ldots,X_n|\mu,\lambda\,\stackrel{iid}{\sim} \N(\mu,\lambda^{-1}).$$
 Then independently consider
 \begin{align*}
 & \bm\mu \sim \N(\mu_0,\lambda_0^{-1})\\
 & \bm{\lambda} \sim \Ga(a,b)
 \end{align*}
 
-This is called a semi-conjugate situation, in the sense that the prior on $\mu$ is conjugate for each fixed value of $\lambda$, and the prior on $\lambda$ is conjugate for each fixed value of $\mu$.
+We refer to this as a **semi-conjugate situation** for the following reasons:
+
+1. The prior on $\mu$ is **conjugate** for each fixed value of $\lambda$ since we get an updated Normal distribution. 
+2. The prior on $\lambda$ is **conjugate** for each fixed value of $\mu$ since we get an updated Gamma distribution. 
 
 \vskip 1em
 
@@ -424,10 +473,12 @@ and
 p(c|\alpha, x_{1:n})\underset{c}{\propto}p(\alpha,c|x_{1:n})
 \underset{c}{\propto} c^{n\alpha}\I(0<c<x_*),
 \end{align*}
-which we will define to be Mono$(\alpha, x_*)$
+which we will define to be Mono$(\alpha, x_*),$ \textcolor{red}{and we define generally on the next slide.}
 
 Mono distribution
 ===
+\textcolor{red}{Here, we define the Mono distribution generally before returning to our example.}
+
 For $a>0$ and $b>0$, define the distribution $\Mono(a,b)$ (for monomial) with p.d.f.
 $$ \Mono(x|a,b)\propto x^{a-1}\I(0<x<b). $$
 Since $\int_0^b x^{a -1}d x = b^a/a$, we have
@@ -547,4 +598,20 @@ Survival functions
  \label{figure:Pareto}
 \end{center}
 \end{figure}
+
+Detailed Takeways
+===
+
+- inverse CDF method 
+- Two-stage Gibbs sampler
+- Markov Chain
+- properties of Markov chains 
+- Exponential Example
+- Truncated Exponential
+- Normal-Normal-Gamma
+- Pareto Case Study
+- Trace plots
+- Estimated Densities
+- Running Aveage Plots
+- Survival Funtions
 

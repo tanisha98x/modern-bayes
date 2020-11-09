@@ -9,6 +9,75 @@ output:
 font-size: 8px
 ---
 
+Announcements
+===
+
+Thank you for your feedback on the course so far! If you have not yet filled out the survey, I would greatly appreciate your feedback. Response rate: 24/40. 
+
+What you appreciated/liked
+===
+
+1. The pace of the lecture. 
+2. The interactive lectures and use of the ipad. 
+3. The pre-recorded videos. 
+4. Most students like the homework and length.
+5. Most students like the organization and structure of the course. If you did not, there is a video explaining how to naviagate the course webpage that I went over on the first day of class. 
+6. Students appreciated how available myself + the TA Team for answering questions. (If you're not reaching out; please reach out). We are here to help you! 
+7. Students appreciated the focus on learning over grading. 
+8. Students said the course was on par or much better than their virtual lectures. 
+9. Students appreciated that there is a wealth of information available to them. 
+
+Student Requests
+===
+
+- Students asked for a cheat sheet regarding the course. Done! 
+
+- Extra OH. Done! 
+
+- Students would like to see expectations regarding the graded homeworks. Done! 
+
+- We're moving to Piazza. (See updates to course webpage, Sakai, syllabus).
+
+- ipad notes have been pre-recorded, so these are already there:) 
+
+- I've posted all my (live) written ipad notes in each github module in case you want to look back over these for your exam preparation. You also have the typed notes. If you want to see a different derivation, you can look in my typed lecture notes or in Hoff. 
+
+
+
+
+
+Student Requests
+===
+
+
+
+- ``I'm overwhelmed by the reading, video recordings, and amount of material."
+
+If you're getting overwhelmed, please talk with me 1-1, so I can talk with you regarding making a plan and strategy that works best with you. 
+
+
+- A few students would prefer videos on Panopto. I unfortuantely will not have time to move all videos to Panopto and make this extremely organized this semester. I really appreciate the feedback though. 
+
+Other Requests
+===
+
+- Two students would like different due dates of assignments. 
+- Two students did not like the course webpage. (More feedback would be helpful on what you don't like about it). 
+
+Since most students didn't ask for a change, I'm going to keep these dates the same. If you have a special circumstance that falls under the flexibility teaching policy that I offer, please email me by today to talk about options. 
+
+Other Requests 
+===
+
+- The labs now just have one file (Rmd and pdf). Please check that you can render these as you need LaTeX installed. 
+- When class connects to a lab, I've noted in the online lectures. 
+- Pop me an email if you have any clarification, and I'm always happy to modify the lecture notes to improve the clarity. 
+- If there is a major change moving forward, I will post an announcement on Piazza. 
+
+
+
+
+
 
 Agenda
 ===
@@ -76,6 +145,13 @@ a X + b Y\sim\N(a\mu + b m,\,a^2\sigma^2+ b^2 s^2).
 \item Careful: \texttt{rnorm}, \texttt{dnorm}, \texttt{pnorm}, and \texttt{qnorm} in \texttt{R} take the mean and \textcolor{red}{standard deviation} $\sigma$ as arguments (not mean and variance $\sigma^2$). For example, \texttt{rnorm(n,m,s)} generates $n$ normal random variables from $\N(m,s^2)$.
 \end{itemize}
 
+Symmetry of the Normal Distribution
+===
+
+The normal distribution is symmetric. Why? 
+
+
+
 Normal-Uniform
 ===
 $$ X_1,\dotsc,X_n \mid \theta \iid\N(\theta,\sigma^2). $$
@@ -89,7 +165,7 @@ Solution
 \begin{align}
 p(\theta \mid x_{1:n}) 
 &\propto
-\N(\theta,\sigma^2) \times 1 \\
+\textcolor{blue}{\N(x_{1:n} \mid \theta,\sigma^2)} \times 1 \\
 & \propto (\frac{\ell}{2\pi})^{n/2}\exp\big(-\tfrac{1}{2}\ell \sum_i(x_i-\theta)^2\big)\notag\\
 & \propto \exp\big(-\tfrac{1}{2}\ell \sum_i(x_i -\bar{x} + \bar{x} - \theta)^2\big)\notag\\
 & \propto \exp\big(-\tfrac{1}{2}\ell \sum_i(x_i -\bar{x})^2)
@@ -97,6 +173,7 @@ p(\theta \mid x_{1:n})
 &\propto 
 \exp\big(-\tfrac{1}{2}\ell \sum_i( \bar{x} - \theta)^2\big) \\
 &= \textcolor{red}{\exp\big(-\tfrac{n \ell}{2} (\theta - \bar{x} )^2\big)}
+= \textcolor{blue}{\N(\theta \mid \bar{x}, (n\ell)^{-1}).}
 \end{align}
 
 This implies that 
@@ -111,7 +188,7 @@ i.e., $p(\theta) = \N(\theta\mid \mu_0,\lambda_0^{-1})$. This is sometimes refer
 
 Posterior derivation
 ===
-We begin with the **likelihood** of the normal distribution. 
+We begin with the **likelihood** of the normal distribution. \textcolor{blue}{We work with proportionality with respect to $\theta$ as we will combine the **likelihood** and **prior** to find the posterior, where the parameter of interest is $\theta.$}
 
 \textcolor{red}{For any $x$ and $\ell$},
 \begin{align}\label{equation:prop}
@@ -157,11 +234,12 @@ Recall $$L =\lambda_0+ n\lambda \quad \text{and} \quad
 M =\frac{\lambda_0\mu_0+\lambda\sum_{i = 1}^n x_i}{\lambda_0+ n\lambda}.$$
 
 It turns out that the posterior is
-$$
-\begin{aligned}\label{equation:posterior}
-\btheta|x_{1:n}\, \sim \,\N(M,L^{-1})
-\end{aligned}
-$$
+
+\begin{equation}
+\label{equation:posterior}
+\textcolor{red}{\btheta|x_{1:n}\, \sim \,\N(M,L^{-1})}
+\end{equation}
+
 
 i.e., $p(\theta|x_{1:n}) =\N(\theta\mid M,L^{-1})$.
 
@@ -204,7 +282,8 @@ At a glance, while the heights of women and men separately do appear to be rough
 Our Assumptions
 ===
 - Assume female heights and male heights are each normally distributed. 
-- Let's assume they have the same standard deviation, and also that there is an equal proportion of women and men in the population. 
+- \textcolor{red}{Assume both female heights and male heights have different means but the same standard deviation.}
+- \textcolor{red}{Assume that there is an equal proportion of women and men in the population.} 
 - Then, it is known that the combined distribution is bimodal if and only if the difference between the means is greater than twice the standard deviation (Helguerro, 1904).
 
 Model
@@ -254,7 +333,7 @@ Results
 
 Results (continued)
 ===
-We can compute the posteriors for $\theta_f$ and $\theta_m$ using Equation \ref{equation:posterior} for each of them, independently.  Figure \ref{figure:heights-prior-posterior} shows the priors and posteriors. 
+We can compute the posteriors for $\theta_f$ and $\theta_m$ using \textcolor{red}{Equation \ref{equation:posterior}} for each of them, independently.  Figure \ref{figure:heights-prior-posterior} shows the priors and posteriors. 
 \begin{itemize}
 \item Sample means: $\bar x = 168.0$ cm (5 feet 6.1 inches) for females, and $\bar y = 181.4$ cm (5 feet 11.4 inches) for males.
 \item Posterior means: $M_f = 168.0$ cm for females, and $M_m = 181.4$ cm for males. (Essentially identical to the sample means, due to the relatively large sample size and relatively weak prior.)
@@ -285,4 +364,81 @@ Takeaways
 - We discussed types of data that empirically have a normal distribution to motivate its usage. 
 - We dervied the Normal-Uniform model, where the uniform distribution is the first improper prior we have seen in this course. 
 - We derived the Normal-Normal model. 
-- We considered an application of human heights from Schlling et al. (2002), where we showed that the posterior probability of bimodality was zero (regarding a plot of combined heights). 
+- We considered an application of human heights from Schilling et al. (2002), where we showed that the posterior probability of bimodality was zero (regarding a plot of combined heights). 
+
+Detailed Takeaways for Exam
+===
+
+- Working with the univariate normal distribution
+- Knowing the precision and variance relationship
+- Knowing the shape of the normal distribution
+- Knowing the CLT
+- Knowing what type of data is approximately normal and what data is not
+- Knowing properties of the normal that we will often work with such as symmetry about the mean 
+- Being able to derive the posterior of the normal-uniform model
+- Understanding that a non-informative prior is highly informative and why. 
+- Being able to derive the normal-normal posterior distribution
+- Knowing how to write out the posterior mean and variance intuitively
+
+Detailed Takeaways for Exam (Continued)
+===
+
+- You should be able to work with a two-component mixture model (as in the case study)
+- Suppose I provide you with a case study such as the one on human heights. You should be able to explain why it makes sense to model the data as normal and what paramaters would be reasonable given the description. 
+- Given as case study, you should be able to incorporate a pilot (or prior study) into your prior distribution and back up how you incorporate it. 
+- You should be able to update the posterior accordingly. 
+- You be able to state benefits of your model specification and weaknesses. 
+- You should be able to state a better model that would be more realistic once we have covered the normal-normal-gamma model (module 4). 
+- You should be able to discuss sensitity of the posterior analysis for any hyper-parameters. 
+
+
+
+Exercise
+===
+
+Recall that Recall $$L =\lambda_0+ n\lambda \quad \text{and} \quad
+M =\frac{\lambda_0\mu_0+\lambda\sum_{i = 1}^n x_i}{\lambda_0+ n\lambda}.$$
+
+What happens to the posterior mean and the precision as $n \rightarrow \infty.$
+
+
+
+Exercise
+====
+
+Let's consider the posterior mean. 
+$$
+\begin{aligned}
+M &=\frac{\lambda_0\mu_0+\lambda\sum_{i = 1}^n x_i}{\lambda_0+ n\lambda} \\
+&=\frac{\lambda_0\mu_0+\lambda n \bar{x}}{\lambda_0+ n\lambda} \\
+&=\frac{\lambda_0\mu_0/n+\lambda  \bar{x}}{\lambda_0/n+ \lambda} \\
+\end{aligned}
+$$
+
+As $n \rightarrow \infty,$
+
+$$M \rightarrow \lambda  \bar{x}/\lambda = \bar{x}.$$
+
+Exercise
+===
+
+Let's consider the posterior variance. 
+
+$$L^{-1} =\frac{1}{\lambda_0+ n\lambda}$$ 
+
+As $n \rightarrow \infty,$
+
+$$L^{-1} = \frac{1}{\lambda_0+ n\lambda} = \frac{1/n}{\lambda_0/n+ \lambda} \approx \frac{1}{n \lambda} \rightarrow 0 $$ 
+
+Interpretation
+===
+
+What can we learn from this example? 
+
+If our sample size is large enough (for any application or real world example), then 
+
+\begin{enumerate}
+\item the posterior mean will tend to the the sample mean.
+\item the posterior variance will tend to 0. 
+\end{enumerate}
+

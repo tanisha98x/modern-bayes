@@ -9,6 +9,16 @@ output:
 font-size: 8px
 ---
 
+Announcements
+===
+
+- Exam I is on Thursday, September 24
+- Tuesday September 22 we will review
+- Material will cover modules 1 -- 4.
+- There will be no lab on September 25th
+- Olivier and Michael will hold extra review sessions (the week of the exam) in place of lab that will be announced soon
+- Who cannot make any OH due to a class conflict? 
+
 
 Agenda
 ===
@@ -337,5 +347,18 @@ Takeaways
 - We derived the posterior for the Normal likelihood and the Normal-Gamma prior. What did this involve? 
 - We utilized our modeling techniques this week on an application to IQ scores. How realistic was this model in practice? 
 - If you made changes to the model, what changes would you make and what complications might you run into? 
+
+Detailed Takeaways
+===
+
+- In order to understand this module, you must be able to derive the normal-normal model. 
+- You must have a solid foundation regarding the normal distribution and its properties. 
+- You must know the relationship between the precision and the variance. 
+- You should be able to derive the normal-normal-gamma model. 
+- You should conceptually understand why this model is important and when it's used for a case study. 
+- You should understand conceptually what each of the four parameters of the normal-gamma distribution represent. 
+- The case study for this problem (on IQ scores) is a good review problem regarding when you should use the normal-normal-gamma model over the normal-normal model. This is something that you should be able to conceptually walk through for this case study or a similar case study. 
+
+
 
 

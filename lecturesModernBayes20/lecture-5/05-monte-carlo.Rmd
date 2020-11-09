@@ -68,7 +68,7 @@ $$\textcolor{red}{E_f[h(x)] = \int_X h(x) f(x) \; dx.}$$
 The classical way to solve this is generate a sample $(X_1,\ldots,X_n)$ from $f.$ 
 \vskip 1 em
 Now propose as an approximation the empirical average:
-$$\bar{h}_n = \frac{1}{n}\sum_{j=n}^n h(x_j).$$ 
+$$\bar{h}_n = \frac{1}{n}\sum_{j=1}^n h(x_j).$$ 
 \vskip 1 em
 Why?  $\bar{h}_n$ converges a.s.\ (i.e.\ for almost every generated sequence) to $E_f[h(X)]$ by the Strong Law of Large Numbers.
 
@@ -196,11 +196,13 @@ The Variance
 ===
 
 \begin{align}
-Var(\hat{I}) &= \dfrac{1}{n^2}\sum_i Var\left(\dfrac{h(X_i) f(X_i)}{g(X_i)}\right)\\
-&=\dfrac{1}{n}Var\left(\dfrac{h(X_i) f(X_i)}{g(X_i)}\right)  \implies \\
+Var(\hat{I}) &= \dfrac{1}{n^2}\sum_i Var_g\left(\dfrac{h(X_i) f(X_i)}{g(X_i)}\right)\\
+&=\dfrac{1}{n}Var_g\left(\dfrac{h(X_i) f(X_i)}{g(X_i)}\right)  \implies \\
 \widehat{Var}(\hat{I}) &= 
-\dfrac{1}{n}\widehat{Var}\left(\dfrac{h(X_i) f(X_i)}{g(X_i)}\right).
+\dfrac{1}{n}\widehat{Var}_g\left(\dfrac{h(X_i) f(X_i)}{g(X_i)}\right),
 \end{align}
+
+\textcolor{red}{where  $X_1, X_2, \ldots, X_n$ are iid samples from $g.$}
 
 Simple Example
 ===
@@ -353,15 +355,15 @@ Drawing Uniform Samples
 General Rejection Sampling Algorithm
 ===
 Goal: Sample from a \textcolor{red}{complicated pdf $f(x).$}
-\vskip 1 em
+\vskip 0.5 em
 Suppose that $$\textcolor{red}{f(x)} = \tilde{f}(x)/\alpha, \alpha>0$$.
 
 Assumption: $f$ is difficult to evaluate, $\tilde{f}$ is easy! 
 
 Suppose the density $g$ is such that for some known constant $M,$ 
-$$Mg(x) \geq \ell(x)$$ for all $x.$
+$$Mg(x) \geq \ell(x)$$ for all $x.$ Procedure:
 
-Procedure:
+
 \begin{enumerate}
 \item Choose a \textcolor{blue}{proposal distribution $q$} such that $c>0$ with 
 $$c \textcolor{blue}{q(x)} \geq \tilde{f}(x).$$
@@ -429,6 +431,27 @@ Entire picture and an example point $X$ and $Y$
   \caption{Entire picture and an example point $X$ and $Y.$}
 \end{figure}
 
+Takeaways
+===
+
+- What is Monte Carlo (The naive method)
+- Why do we use Monte Carlo over numerical integration?
+- Importance sampling
+- Rejection sampling
+
+Detailed Takeaways
+===
+
+- Why do we use Monte Carlo? 
+- Why do we use importance sampling?
+- Why do we use rejection sampling?
+- When would we use a particular method above over another for a case study? This would be problem specific. So, if you know someting about the important region at hand, you would typically use importance sampling. Rejection sampling and importance sampling will typically out perform naive Monte Carlo in terms of providing a lower variance estimate. 
+- In the next modules, we will learn about Markov chain Monte Carlo algorithms (MCMC), which are used for working in high dimensional spaces. 
+- Monte Carlo, importance sampling, and rejection sampling do not work well in high dimensions and thus we turn to MCMC. The trade-off is that 1) MCMC is a bit trickier to learn, 2) it will be slower to implement in practice, and 3) we can NEVER be assured that our sampler will reach the true target. 
+
+
+
+
 Exercise (Lab 5)
 ===
 Consider the function
@@ -439,7 +462,8 @@ $$ f(x) \propto \sin^2(\pi x), x \in [0,1]$$
 \item According to the rejection sampling approach sample from $f(x)$ using the Unif(0,1) pdf as an enveloping function.
 \item Plot a histogram of the points that fall in the acceptance region. Do this for a simulation size of $10^2$ and $10^5$ and report your acceptance ratio. Compare the ratios and histograms.
 \item Repeat Tasks 1 - 3 for  Beta(2,2) as an enveloping function. Compare your results with results in Task 3.
-\item Using importance sampling calculate the $\mathbb{E}(x)$, where $x \sim f(x)$ from previous task and the proposal distribution is transformed Beta(2,2). (This will be covered in more detail in lab.)
+\item Do you recommend the Uniform or the Beta(2,2) as a better enveloping function (or are they about the
+same)? If you were to try and find an enveloping function that had a high acceptance ratio, which one would you try and why?
 \end{enumerate}
 
 
@@ -691,6 +715,67 @@ An ideal histogram would be highly centered around the true value of 1.81.  For 
 
 
 
+Exam I
+===
+
+- Closed notes, closed book. 
+- You will be given cover page with distributions. 
+- Please make sure that you arrive early and not late. 
+- Please only ask questions privately through the chat and do not broadcast these to everyone. 
+- Material covers: Modules 1--4. 
+- Material covers lectures (slides and written material in class), labs, and homeworks. 
+
+Exam I
+===
+
+- Under the syllabus, you are not allowed to speak to anyone regarding the exam except the instructor until the results (grades) are released back to you. 
+
+Module I (Recap)
+===
+- Bayes Theorem 
+- Cast of characters
+- Conjugacy 
+- Marginal and posterior predictive distributions
+- Here, we looked at very simple applied examples regarding polling and sleep to motivate the use of conjugacy. 
+
+Module II (Recap)
+===
+
+- Decision Theory
+- Loss functions
+- Bayes Risk
+- Frequentist Risk
+- Integrated Risk 
+- Here, we looked at a resource allocation problem with a non-trivial loss function. 
+
+Module III (Recap)
+===
+
+- Univariate Normal distribution 
+- Properties of the normal distribution
+- Normal-Uniform 
+- The uniform is an example of an imporoper prior
+- Normal-Normal conjugacy 
+- The precision
+- What happens to the Normal-Normal posterior as the sample size gets large? 
+- The applied example here was about Dutch heights of women and men and looking at bi-modality. 
+
+
+Module IV (Recap)
+===
+
+- The Normal-Gamma conjugacy
+- This module was the first time we saw a three-layer hierarhical model 
+- This was a very long derivation
+- The applied example that went with this model was IQ scores since we had two different populations with different means and precisions. 
+
+Review Materials 
+===
+
+- Two quizzes (ungraded). 
+- Practice exercises: https://github.com/resteorts/modern-bayes/tree/master/exercises
+- Review homework exercises
+- Next Tuesday, there there will be a timed question at the start of the review session that is meant to help prepare you for the exam. We will go over it in class. 
 
 
 

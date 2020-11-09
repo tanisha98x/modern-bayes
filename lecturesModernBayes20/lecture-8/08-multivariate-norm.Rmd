@@ -10,17 +10,101 @@ output:
 font-size: 8px
 ---
 
+Exam II
+===
+
+- Coverage will be modules 5 -- 7
+- The exam will be during in class on Thursday, October 29th
+- The exam will be open note/open book (open resources)
+- You may not talk to anyone during the exam except for myself or a TA
+- All questions must be sent via private chat. 
+- Look over the ENTIRE exam during the first 15 minutes to see if you have clarifying questions to avoid a triage of questions at the end of the exam. 
+- You are to not talk/post/communicate with anyone about the exam until after grades are released (or this is an honor code violation), so DO NOT post anywhere (including piazza).  
+
+Exam II
+===
+
+- There will be four questions
+- Q1: Free response
+- Q2: True/False
+- Q3/Q4: derivations and conceptual
+
+Exam II General Topics
+===
+
+- Module 5: Monte Carlo (naive, importance sampling, rejection sampling)
+- Module 6: MCMC (MCMC, why MCMC, Markov property, advantages/disadvantages, ergodic theorem)
+- Module 6: Example of MCMC: Metropolis Algorithm (original paper)
+- Module 6: Metroplis Algorithm from a Bayesian perspective 
+- Module 6: Traceplots, Posterior Densities 
+
+Exam II General Topics
+===
+
+- Module 7: Gibbs sampling (two stage and multi-stage Gibbs sampler)
+- Module 7: Latent variable models and data augmentation (censoring and guassian mixture models)
+- Module 7: Diagnostics: Traceplots, Running average plots, burn-in
+- Module 7: Other topics: the label switching problem
+
+Exam II
+===
+
+- Given the amount of material, I will not be able to test you on everything above. It's just not possible. 
+- So, use your time wisely, and make sure you have a firm knowledge of everything that we have covered. 
+
+What are the main topics for Exam II
+===
+
+1. Monte carlo (naive, importance sampling, rejection sampling)
+2. General properties of MCMC (MCMC, why MCMC, Markov property, advantages/disadvantages, ergodic theorem)
+3. Intro to the Metropolis algorithm (original 1959 paper)
+4. The Metroplis Algorithm from a Bayesian perspective 
+5. Diagnostics (traceplots, running average plots, posterior densities, posterior credible intervals, burn-in)
+6. Gibbs sampling (just the set up, deriving conditionals, and writing pseudo-code for the Gibbs sampler)
+7. Censoring using latent variables
+8. Gaussian mixture models using latent variables (data augmentation)
+
+On Tuesday, the TA's (Lavonne, Michael, Ziang, and myself) will cover four of these topics as voted on by you as a class. 
+
+Upcoming OH
+===
+
+- OH will also be prioritized by the voted upon topics before moving onto other questions. 
+- Lab this week will focus on these prioritized topics that you as a class vote on.
+- \textbf{There will lab next Friday, where you will work on homework 7. There will be no class on election day.}
+
+
+
 Agenda
 ===
-\begin{itemize}
-\item Moving from univariate to multivariate distributions. 
-\item The multivariate normal (MVN) distribution.
-\item Conjugate for the MVN distribution.
-\item The inverse Wishart distribution. 
-\item Conjugate for the MVN distribution (but on the covariance matrix). 
-\item Combining the MVN with inverse Wishart. 
-\item See Chapter 7 (Hoff) for a review of the standard Normal density.
-\end{itemize}
+- Motivational reading comprehension case study 
+- Introduction/Review of vectors, matrices
+- Population means/covariance matrices
+- General multivariate notation
+- Background on linear algebra (with practice exercises)
+- Determinants, traces, quadratic forms
+
+Agenda
+===
+
+- The multivariate normal distribution (MVN)
+- Exercise with the MVN
+- MVN-MVN semi-conjugacy 
+- The inverse wishart distribution
+- MVN-inverse wishart semi-conjugacy 
+- The MVN-MVN-inverse wishart model 
+- Applying a Gibbs sampler
+- How to draw samples from the MVN and inverse wishart distributions
+- Case study on reading comprehension
+
+Goal
+===
+
+The goal of this module is to be able **to understand how to work with multivariate distributions**, such as the multivariate normal distribution. 
+
+We also want to understand how univariate models that we have used in the past translate to the multivariate setting. 
+
+Before we can delve in, we must review background on matrices, vectors, and **multivariate notation**. We also must review background on **linear algebra**. 
 
 Example: Reading Comprehension
 ===
@@ -50,17 +134,17 @@ What does this data look like that is observed?
 
 $$\bm{X}_{n \times p} = 
 \left( \begin{array}{cccc}
-x_{11} & x_{12} & \ldots&  x_{n1}\\
-x_{21} & x_{22} & \ldots& x_{n2} \\
-x_{i1} & x_{i2} & \ldots& x_{ni} \\
+x_{11} & \textcolor{red}{x_{12}} & \ldots&  x_{n1}\\
+x_{21} & \textcolor{red}{x_{22}} & \ldots& x_{n2} \\
+x_{i1} & \textcolor{red}{x_{i2}} & \ldots& x_{ni} \\
 \vdots & \vdots & \ddots & \vdots \\
-x_{n1} & x_{n2} &\ldots& x_{np}
+x_{n1} & \textcolor{red}{x_{n2}} &\ldots& x_{np}
 \end{array} \right).
 $$
 
 - A row of $\bm{X}_{n \times p}$ represents a covariate we might be interested in, such as age of a person.
 
-- Denote $x_i$ as the ith \textcolor{red}{row vector} of the $X_{n \times p}$ matrix. 
+- Denote $x_{i}$ $(p \times 1)$ as the $i$th \textcolor{red}{row vector} of the $X_{n \times p}$ matrix.
 
 \[  x_{i}= \left( \begin{array}{c}
 x_{i1}\\
@@ -68,7 +152,6 @@ x_{i1}\\
 \vdots\\
 x_{ip}
 \end{array} \right) \]
-where its dimension is $p \times 1.$
 
 Example: Reading Comprehension
 ===
@@ -84,11 +167,19 @@ Y_{i,2}\\
 \mu_1\\
 \mu_2\\
 \end{array} \right) 
+= 
+\bmu
 $$
-We also may be interested in the population covariance matrix, $\Sigma.$
+
+Example: Reading Comprehension
+===
+We also may be interested in the population covariance matrix, $\Sigma_{p \times p}.$
+
+By definition: 
 \begin{align}
-\Sigma &= Cov(\bm{Y})
-=
+\Sigma  
+&= Cov(\bm{Y})\\
+&=
 \left( \begin{array}{cccc}
 E[Y_1^2] - E[Y_1]^2 & E[Y_1Y_2] - E[Y_1]E[Y_2] \\
 E[Y_1Y_2] - E[Y_1]E[Y_2] & E[Y_2^2] - E[Y_2]^2
@@ -102,13 +193,20 @@ E[Y_1Y_2] - E[Y_1]E[Y_2] & E[Y_2^2] - E[Y_2]^2
 
 Remark: $Cov(Y_1) = Var(Y_1) = \sigma_1^2. \qquad Cov(Y_1, Y_2) = \sigma_{1,2}.$
 
+How do we expand this beyond our reading comprehension example
+===
+
+We introduced our notation based upon a specific example to reading comprehension. 
+
+How can we make this more general and applicable to general case studies and problems?
+
 General Notation
 ===
 Assume that $\bm{y}_{p \times 1} \sim (\mu_{p \times 1}, \Sigma_{p \times p}).$
 
 $$\bm{y}_{p \times 1}= \left( \begin{array}{c}
 y_{1}\\
-\textcolor{red}{y_{2}}\\
+{y_{2}}\\
 \vdots\\
 y_{p}
 \end{array} \right).$$
@@ -132,7 +230,16 @@ $$
 \end{array} \right).
 $$
 
-Linear Algebra Background
+
+Background
+===
+
+Before proceeding, we need to review some basic concepts from linear algebra:
+
+1. Basic properties of matrices
+2. Useful lemmas for working with matrices
+
+The determinant of a matrix 
 ===
 
 Assume a matrix $A_{n \times n}$  is invertible. The 
@@ -141,12 +248,50 @@ where $A{ij}$ are the co-factors and are computed from $$A_{ij} = (-1)^{i+j}det(
 $M_{ij}$ is known as the minor matrix and is the matrix you get if you eliminate row i and column j from matrix $A.$ You must apply this technique recursively.
 \vskip 1em 
 
-I recommend using the det() commend in R. 
+\textbf{We only use this technique when doing such calculations by hand or in proof-based approaches.}
+
+The determinant of a matrix 
+===
+
+- How on earth do I use the complicated formula on the pervious slide. 
+
+\textbf{Easy: Use the \texttt{det} command in \texttt{R} when faced with an application.}
+
 \vskip 1em 
+
+- You will also see a determinant in the definition of the multivariate normal distribution. 
+
+\textbf{Important point: It's just a function and we typically do not need to evalute it in this course!}
+
+
+The trace of a matrix 
+===
 
 Assume a matrix $H_{p \times p}.$
 
 $$\text{trace}(H) = \sum_i h_{ii},$$ where $h_{ii}$ are the diagonal elements of $H.$
+
+Interactive Exercise
+===
+
+We're going to move into working in groups, so you can work on the following exercises. 
+
+
+The trace of a matrix 
+===
+
+$$
+H =
+\left( \begin{array}{cc}
+1 & 0 \\
+0 & 1 \\
+\end{array} \right).
+$$
+What is $\text{tr}({H})?$ 
+
+\vline
+
+(Take 1 minute to complete this.)
 
 Linear Algebra Tricks
 ===
@@ -159,16 +304,42 @@ Lemma 1:
 $$tr(AB) = tr(BA)$$
 Proof: Exercise. 
 
+(Take 5-7 minutes to complete this.)
+
+
+
+Linear Algebra Tricks
+===
+
 Lemma 2: 
 
-Suppose $\bm{x}$ is a vector. 
+Suppose $\bm{x}$ is a vector. $\bm{x}^TA\bm{x}$ is called a **quadratic form**. 
 
 $$\bm{x}^TA\bm{x} = tr(\bm{x}^TA\bm{x}) = tr(\bm{x}\bm{x}^TA) = tr(A\bm{x}\bm{x}^T)$$
 
 Proof: Exercise. 
 
+Linear Algebra Tricks
+===
 
-Why are these useful? We'll come back to this later in the module.
+Proof of Lemma 2:
+
+\begin{align}
+tr({\bm{x}^TA\bm{x}})  
+&= \sum_i (x^tAx)_{ii} \\ 
+& = (\bm{x}^T(A\bm{x})) \\
+& = tr(A\bm{x}\bm{x}^T) \; (\text{by Lemma 1})
+\end{align}
+
+\begin{align}
+tr({\bm{x}^TA\bm{x}})  
+&= \sum_i (x^tAx)_{ii} \\ 
+& = ((\bm{x}^TA)\bm{x}) \\
+& = tr(\bm{x}\bm{x}^TA)\; (\text{by Lemma 1})
+\end{align}
+
+
+
 
 Notation
 ===
@@ -197,18 +368,31 @@ p(\bm{x}) = {\left(2\pi\right)}^{-p/2}(\det{\Sigma})^{-1/2} \exp{\left\{-\frac{1
 
 Standard Multivariate Normal Distribution
 ===
+
+Lemma 3. 
+
 Consider $$Z_1, \ldots, Z_n \stackrel{iid}{\sim} N(0,1).$$
-Show that $$Z_1,\ldots,Z_n \sim MVN(0,I).$$
+Show that $$Z_1,\ldots,Z_n \sim MVN(\textbf{0},I_{n \times n}).$$
+
+Proof of Lemma 3
+===
+Proof:
 
 \begin{align}
 f_z(z) &= \prod_{i=1}^n (2\pi)^{-1/2} e^{-z_i^2/2}\\
 & = (2\pi)^{-n/2} e^{\sum_i-z_i^2/2}\\
 & = (2\pi)^{-n/2} e^{-z^Tz/2}.
 \end{align}
+The last line is follows since  $\sum_i-z_i^2 = -z^Tz.$
 
-Exercise: Why does $\sum_i-z_i^2 = -z^Tz$?
+Thus, $Z_1,\ldots,Z_n \sim \text{MVN}(\textbf{0},I).$
 
-We have just showed that $Z_1,\ldots,Z_n \sim MVN(0,I).$
+Goals
+===
+
+1. We will derive the MVN-MVN.
+2. We will derive the MVN-inverse Wishart
+3. We will then consider a hierarchical model and use 1-2 in order to derive our full conditional distributions and construct a Gibbs sampler. (This will help you on Homework 7). 
 
 Conjugate to MVN
 ===
@@ -684,5 +868,122 @@ $$
 mean(THETA[,2] > THETA[,1])
 ```
 
+Detailed Takeaways on Background 
+===
 
+- Understanding vectors, matrices and notation  
+- Understanding how to write multivariate notation for a conceptual problem
+- Understanding how to write general multivariate notation
+- Background on linear algebra 
+- Determinants, traces, quadratic forms
+- Knowing how to do simple proofs such as the exercises from class 
+
+Detailed Takeaways on Multivariate Normal Models
+===
+
+- The multivariate normal distribution (MVN)
+- Exercise with the MVN
+- MVN-MVN semi-conjugacy 
+- The inverse wishart distribution
+- MVN-inverse wishart semi-conjugacy 
+- The MVN-MVN-inverse wishart model 
+- Applying a Gibbs sampler
+- How to draw samples from the MVN and inverse wishart distributions
+- Case study on reading comprehension
+
+Proof of Lemma 1
+===
+
+$$tr(AB) = tr(BA)$$
+
+Proof: Suppose that $A_{n \times n}$ and $B_{n \times n}.$
+
+Recall that by definition $tr(A) = \sum_{i=1}^n a_{ii}.$ By definition
+\begin{align}
+tr(AB) &= \sum_{i=1}^n (AB)_{ii} \\
+& \sum_{i=1}^n \sum_{j=1}^n a_{ij} b_{ji}\\
+& \sum_{i=1}^n \sum_{j=1}^n b_{ji} a_{ij} \\
+&= \sum_{i=1}^n (BA)_{ii} 
+= tr(BA)
+\end{align}
+
+Exam II Preparation
+===
+
+Consider the following Exponential model for an observation $x$:
+$$ p(x|a,b) = a b \exp(- a b x) \I(x>0)$$
+and suppose the prior is 
+$$ p(a,b) = \exp(- a - b)\I(a,b>0). $$
+
+Exam II Preparation
+===
+
+1. Write out the $p(a,b \mid x).$ Is is something you know how to sample from? Explain. 
+2. Derive any conditional distributions needed for a Gibbs sampler. 
+3. Write pseudo code to illustrate how one would utilize a Gibbs sampler to approximate the posterior distribution. 
+
+
+Solution
+===
+
+1. The posterior distribution can be written as
+
+\begin{align}
+p(a,b \mid x)
+& = a b \exp(- a b x)  \times \exp(- a - b)\I(a,b,x>0)
+\end{align}
+
+This distribution is not something that appears to be a known distribution or looks like it might be something easy to sample from, thus, Gibbs sampling is a natural choice. (Metropolis could be used as well.)
+
+Solution
+===
+
+2. We must derive the full conditionals $a \mid b,x$ and
+$b \mid a,x.$ Consider
+
+
+\begin{align}
+    p(a \mid b,x)
+    &\underset{a}{\propto} p(x,a,b) \\
+    &\underset{a}{\propto} a \exp(-a b x - a)\I(a>0)  \\
+    &= a \exp(-(b x + 1)a)\I(a>0)\\
+    &\underset{a}{\propto} \Ga(a\mid 2,\, b x + 1).
+\end{align}
+
+
+Solution
+===
+
+It follows that
+
+$$p(b \mid a,x) {\propto} \Ga(b\mid 2,\, a x + 1).$$
+
+Solution
+===
+
+Initialize $(a,b)$ to $(a_0, b_0).$
+
+1. For the first iteration of the Gibbs sampler,
+
+Draw $a$ from $a \mid b=b_0,x$
+
+Draw $b$ from $b \mid a=a_1,x$
+
+in order to get $(a_1,b_1).$
+
+2. For the second iteration of the Gibbs sampler,
+
+Draw $a$ from $a \mid b=b_1,x$
+
+Draw $b$ from $b \mid a=a_2,x$
+
+in order to get $(a_2,b_2).$
+
+M. For the $M$th iteration of the Gibbs sampler,
+
+Draw $a$ from $a \mid b=b_{M-1},x$
+
+Draw $b$ from $b \mid a=a_{M},x$
+
+in order to get $(a_M,b_M).$
 
